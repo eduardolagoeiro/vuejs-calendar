@@ -30,7 +30,7 @@
       },
     },
     created(){
-      console.log('commit', this.$store.commit);
+      // console.log('commit', this.$store.commit);
     }
   }
 </script>

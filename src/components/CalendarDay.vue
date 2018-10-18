@@ -1,5 +1,5 @@
 <template>
-  <div :class="classObject">
+  <div :class="classObject" @click="openEventForm">
     {{day | formatDay}}
   </div>
 </template>
@@ -10,6 +10,12 @@
     filters: {
       formatDay(raw){
         return raw.format('D');
+      }
+    },
+    methods:{
+      openEventForm(evt){
+        const { screenX, screenY } = evt;
+        this.$store.commit('openEventForm', { screenX, screenY });
       }
     },
     computed: {
