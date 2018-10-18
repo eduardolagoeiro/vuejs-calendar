@@ -15,7 +15,7 @@
     </div>
     <div id="calendar">
       <div v-for="week in weeks" :key="week" class="calendar-week">
-        <calendar-day v-for="day in week" :key="day" :day="day">
+        <calendar-day v-for="day in week" :key="day" :day="day" >
           
         </calendar-day>
       </div>

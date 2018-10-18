@@ -6,7 +6,7 @@
     <h3>{{dateClicked}}</h3>
     <h4>Add an event</h4>
     <div class="text">
-      <input id="desc" v-focus type="text" v-model="description">
+      <input v-on:keyup.enter="create" id="desc" v-focus type="text" v-model="description">
     </div>
     <div class="buttons">
       <button @click="create">Create</button>
@@ -24,8 +24,7 @@ export default {
   },
   computed: {
     dateClicked(){
-      const {currentDay, currentMonth, currentYear} = this.$store.state;
-      return `${currentDay}-${currentMonth}-${currentYear}`;
+      return this.$store.state.currentDate.format('YYYY-M-D');
     },
     isActive(){
       return this.$store.state.eventFormActive;
@@ -42,7 +41,9 @@ export default {
       this.$store.commit('closeEventForm');
     },
     create(){
-      this.$store.commit('createNewEvent', { description: this.description });
+      this.$store.commit('createNewEvent', {
+        description: this.description
+      });
       this.$store.commit('closeEventForm');
       this.description = '';
     }

@@ -18,8 +18,7 @@
     methods:{
       openEventForm(evt){
         const { screenX, screenY } = evt;
-        const day = parseInt(evt.target.innerHTML.trim());
-        this.$store.commit('openEventForm', { screenX, screenY, day });
+        this.$store.commit('openEventForm', { screenX, screenY, date: this.day });
       }
     },
     computed: {
