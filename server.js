@@ -14,6 +14,15 @@ app.get('/', (req, res) => {
 
 });
 
+app.use(require('body-parser').json())
+
+let events = [];
+
+app.post('/add_event', (req, res) => {
+  events.push(req.body);
+  res.sendStatus(200);
+})
+
 const server = http.createServer(app);
 
 if (process.env.NODE_ENV === 'development') {
@@ -25,6 +34,6 @@ if (process.env.NODE_ENV === 'development') {
 server.listen(process.env.PORT, function () {
   console.log(`Example app listening on port ${process.env.PORT}!`);
   if (process.env.NODE_ENV === 'development') {
-    require("open")(`http://localhost:${process.env.PORT}`);
+    // require("open")(`http://localhost:${process.env.PORT}`);
   }
 });

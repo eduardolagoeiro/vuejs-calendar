@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import moment from 'moment-timezone';
+import axios from 'axios';
 
 import Vuex from 'vuex';
 Vue.use(Vuex);
@@ -41,6 +42,10 @@ export default new Vuex.Store({
     },
     createNewEvent(state, payload){
       state.events.push({
+        description: payload.description,
+        date: state.currentDate
+      });
+      axios.post('/add_event', {
         description: payload.description,
         date: state.currentDate
       });
