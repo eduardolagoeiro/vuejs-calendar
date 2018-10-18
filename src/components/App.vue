@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div id="header">
+      <h1>Vue.js Calendar</h1>
+      <current-month />
+    </div>
     <div id="day-bar">
       <div>Mon</div>
       <div>Tue</div>
@@ -20,8 +24,10 @@
 </template>
 
 <script>
-  import getDaysFromMonth from '../utils/dateHelper';
+  import dateHelper from '../utils/dateHelper';
   import CalendarDay from './CalendarDay.vue';
+  import CurrentMonth from './CurrentMonth.vue';
+
 
   export default {
     computed: {
@@ -32,7 +38,7 @@
         return this.$store.state.currentYear;
       },
       days(){
-        return getDaysFromMonth(this.month, this.year, this.$moment);
+        return dateHelper.getDaysFromMonth(this.month, this.year, this.$moment);
       },
       weeks(){
         const weeks = [];
@@ -44,6 +50,7 @@
     },
     components: {
       CalendarDay,
+      CurrentMonth,
     }
   }
 </script>

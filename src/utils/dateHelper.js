@@ -1,9 +1,6 @@
-export default function getDaysFromMonth(month, year, moment){
+function getDaysFromMonth(month, year, moment){
   let days = []
-  let currentDay = moment(
-    `${year}-${month}-1`,
-    'YYYY-M-D'
-  );
+  let currentDay = formatDate(month, year, moment);
   do {
     days.push(currentDay);
     currentDay = moment(currentDay).add(1, 'days');
@@ -27,4 +24,16 @@ export default function getDaysFromMonth(month, year, moment){
   }
 
   return days;
+}
+
+function formatDate(month, year, moment){
+  return moment(
+    `${year}-${month}-1`,
+    'YYYY-M-D'
+  );
+}
+
+export default {
+  getDaysFromMonth,
+  formatDate
 }
