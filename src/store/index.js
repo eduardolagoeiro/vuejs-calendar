@@ -10,10 +10,10 @@ export default new Vuex.Store({
   },
   mutations: {
     setCurrentMonth(state, payload) {
-      if (payload == 0) {
+      if (payload < 1) {
         state.currentYear -= 1;
         state.currentMonth = 12;
-      } else if(payload == 13) {
+      } else if(payload > 12) {
         state.currentYear += 1;
         state.currentMonth = 1;
       } else {
