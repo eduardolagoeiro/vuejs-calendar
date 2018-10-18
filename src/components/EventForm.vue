@@ -33,7 +33,7 @@ export default {
   computed: {
     dateClicked(){
       this.error = '';
-      return this.$store.state.currentDate.format('YYYY-M-D');
+      return this.$store.state.currentDate.format('MMMM, YYYY Do');
     },
     isActive(){
       return this.$store.state.eventFormActive;
