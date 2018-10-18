@@ -14,6 +14,7 @@
   export default {
     methods: {
       changeMonth(num){
+        this.$store.commit('closeEventForm');
         this.$store.commit('setCurrentMonth', this.month + num );
       }
     },
