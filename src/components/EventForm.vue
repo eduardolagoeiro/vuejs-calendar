@@ -6,7 +6,14 @@
     <h3>{{dateClicked}}</h3>
     <h4>Add an event</h4>
     <div class="text">
-      <input v-on:keyup.enter="create" id="desc" v-focus type="text" v-model="description">
+      <p v-show="error.length > 0">{{error}}</p>
+      <input
+        v-on:keyup.esc="closeEventForm"
+        v-on:keyup.enter="create"
+        id="desc"
+        v-focus
+        type="text"
+        v-model="description">
     </div>
     <div class="buttons">
       <button @click="create">Create</button>
@@ -20,10 +27,12 @@ export default {
   data(){
     return{
       description: '',
+      error: '',
     }
   },
   computed: {
     dateClicked(){
+      this.error = '';
       return this.$store.state.currentDate.format('YYYY-M-D');
     },
     isActive(){
@@ -36,11 +45,21 @@ export default {
       return this.$store.state.formLeft +'px';
     }
   },
+  watch: {
+    description(){
+      this.error = '';
+    }
+  },
   methods: {
     closeEventForm(){
+      this.error = '';
       this.$store.commit('closeEventForm');
     },
     create(){
+      if(this.description.length === 0){
+        this.error = 'Type something.';
+        return;
+      }
       this.$store.commit('createNewEvent', {
         description: this.description
       });
