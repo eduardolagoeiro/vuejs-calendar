@@ -41,14 +41,24 @@ export default new Vuex.Store({
       state.eventFormActive = false;
     },
     createNewEvent(state, payload){
-      state.events.push({
+      state.events.push(payload);
+    }
+  },
+  actions: {
+    addEvent(ctx, payload) {
+      const obj = {
         description: payload.description,
-        date: state.currentDate
-      });
-      axios.post('/add_event', {
-        description: payload.description,
-        date: state.currentDate
-      });
+        date: ctx.state.currentDate
+      };
+      axios.post('/add_event', obj)
+        .then(res => {
+          if(res.status == 200){
+            ctx.commit('createNewEvent', obj);
+          }else{
+            console.log('Error');
+          }
+        })
+        .catch(err => console.log(err));
     }
   }
 });

@@ -60,7 +60,7 @@ export default {
         this.error = 'Type something.';
         return;
       }
-      this.$store.commit('createNewEvent', {
+      this.$store.dispatch('addEvent', {
         description: this.description
       });
       this.$store.commit('closeEventForm');
