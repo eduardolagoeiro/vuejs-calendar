@@ -1,8 +1,10 @@
 <template>
   <div> 
-    <div> {{ formattedDate }} </div>
-    <button @click="dec">-</button>
-    <button @click="inc">+</button>
+    <div>
+      {{ formattedDate }} 
+      <button @click="changeMonth(-1)">-</button>
+      <button @click="changeMonth(+1)">+</button>
+    </div>
   </div>
 </template>
 
@@ -11,11 +13,8 @@
 
   export default {
     methods: {
-      inc(){
-        alert('inc');
-      },
-      dec(){
-        alert('dec');
+      changeMonth(num){
+        this.$store.commit('setCurrentMonth', this.month + num );
       }
     },
     computed: {
@@ -29,6 +28,9 @@
       year(){
         return this.$store.state.currentYear;
       },
+    },
+    created(){
+      console.log('commit', this.$store.commit);
     }
   }
 </script>
