@@ -39,10 +39,10 @@ export default {
       return this.$store.state.eventFormActive;
     },
     top(){
-      return this.$store.state.formTop +'px';
+      return this.$store.state.formTop - 100 +'px';
     },
     left(){
-      return this.$store.state.formLeft +'px';
+      return this.$store.state.formLeft + 100 +'px';
     }
   },
   watch: {
