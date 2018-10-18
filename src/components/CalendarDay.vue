@@ -1,6 +1,9 @@
 <template>
   <div :class="classObject" @click="openEventForm">
     {{day | formatDay}}
+    <ul class="event-list">
+      <li>Random event</li>
+    </ul>
   </div>
 </template>
 
@@ -15,7 +18,8 @@
     methods:{
       openEventForm(evt){
         const { screenX, screenY } = evt;
-        this.$store.commit('openEventForm', { screenX, screenY });
+        const day = parseInt(evt.target.innerHTML.trim());
+        this.$store.commit('openEventForm', { screenX, screenY, day });
       }
     },
     computed: {

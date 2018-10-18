@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     currentYear: (new Date()).getFullYear(),
     currentMonth: (new Date()).getMonth() + 1,
+    currentDay: 0,
     formTop: 500,
     formLeft: 500,
     eventFormActive: false
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     },
     openEventForm(state, payload){
       state.eventFormActive = true;
+      state.currentDay = payload.day;
       state.formTop = payload.screenY;
       state.formLeft = payload.screenX;
     },

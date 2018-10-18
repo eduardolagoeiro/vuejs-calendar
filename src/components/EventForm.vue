@@ -3,6 +3,7 @@
     id="event-form"
     :class="{ active: isActive }"
     :style="{ top: top, left: left }">
+    <h3>{{dateClicked}}</h3>
     <h4>Add an event</h4>
     <button id="close-button" @click="closeEventForm">&#10005;</button>
   </div>
@@ -11,6 +12,10 @@
 <script>
 export default {
   computed: {
+    dateClicked(){
+      const {currentDay, currentMonth, currentYear} = this.$store.state;
+      return `${currentDay}-${currentMonth}-${currentYear}`;
+    },
     isActive(){
       return this.$store.state.eventFormActive;
     },
