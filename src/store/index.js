@@ -38,6 +38,12 @@ export default new Vuex.Store({
     },
     closeEventForm(state){
       state.eventFormActive = false;
+    },
+    createNewEvent(state, payload){
+      const { description } = payload;
+      const { currentYear, currentMonth, currentDay} = state;
+      const date = moment().date(currentDay).month(currentMonth-1).year(currentYear);
+      state.events.push({ description, date });
     }
   }
 });

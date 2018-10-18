@@ -1,6 +1,12 @@
 import Vue from 'vue';
 import './style.scss';
 
+Vue.directive('focus', {
+  update: function (el) {
+    el.focus()
+  }
+})
+
 import store from './store';
 
 import App from './components/App.vue';

@@ -2,7 +2,7 @@
   <div :class="classObject" @click="openEventForm">
     {{day | formatDay}}
     <ul class="event-list">
-      <li v-for="(event, index) in events" :key="index">Random event</li>
+      <li v-for="(event, index) in events" :key="index">{{event.description}}</li>
     </ul>
   </div>
 </template>
