@@ -19,7 +19,6 @@ export default new Vuex.Store({
       } else {
         state.currentMonth = payload;
       }
-      
     }
   }
 });
