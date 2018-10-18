@@ -1,11 +1,23 @@
 <template>
-  <div> {{ formattedDate }} </div>
+  <div> 
+    <div> {{ formattedDate }} </div>
+    <button @click="dec">-</button>
+    <button @click="inc">+</button>
+  </div>
 </template>
 
 <script>
   import dateHelper from '../utils/dateHelper';
 
   export default {
+    methods: {
+      inc(){
+        alert('inc');
+      },
+      dec(){
+        alert('dec');
+      }
+    },
     computed: {
       formattedDate(){
         const todaysMonth = dateHelper.formatDate(this.month, this.year, this.$moment);
