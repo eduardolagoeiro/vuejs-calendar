@@ -2,7 +2,7 @@
   <div :class="classObject" @click="openEventForm">
     {{day | formatDay}}
     <ul class="event-list">
-      <li>Random event</li>
+      <li v-for="(event, index) in events" :key="index">Random event</li>
     </ul>
   </div>
 </template>
@@ -23,6 +23,10 @@
       }
     },
     computed: {
+      events(){
+        const { events } = this.$store.state;
+        return events.filter(evt => evt.date.isSame(this.day, 'day'));
+      },
       classObject(){
         const isToday = this.day.isSame(this.$moment(), 'day');
         const isTodayOrBefore = this.day.isSameOrBefore(this.$moment(), 'day');

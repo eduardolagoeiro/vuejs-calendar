@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import moment from 'moment-timezone';
 
 import Vuex from 'vuex';
 Vue.use(Vuex);
@@ -10,7 +11,12 @@ export default new Vuex.Store({
     currentDay: 0,
     formTop: 500,
     formLeft: 500,
-    eventFormActive: false
+    eventFormActive: false,
+    events: [
+      { description: 'Event 1', date: moment() },
+      { description: 'Event 2', date: moment() },
+      { description: 'Event 3', date: moment() }
+    ]
   },
   mutations: {
     setCurrentMonth(state, payload) {
