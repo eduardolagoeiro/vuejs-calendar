@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import './style.scss';
 
-import Vuex from 'vuex';
-Vue.use(Vuex);
+import store from './store';
 
 import App from './components/App.vue';
 
@@ -20,10 +19,5 @@ new Vue({
   components:{
     App
   },
-  store: {
-    state: {
-      currentYear: (new Date()).getFullYear(),
-      currentMonth: (new Date()).getMonth() + 1,
-    }
-  }
+  store
 });
