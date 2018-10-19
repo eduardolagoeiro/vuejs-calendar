@@ -5,18 +5,18 @@ const app = express();
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
+const serialize = require('serialize-javascript');
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+let events = [];
+
 app.get('/', (req, res) => {
   let template = fs.readFileSync(path.resolve('./index.html'), 'utf-8');
-  res.send(template);
-
+  res.send(template.replace('<!-- APP -->', `<script>var __EVENTS__ = ${serialize(events)};</script>`));
 });
 
 app.use(require('body-parser').json())
-
-let events = [];
 
 app.post('/add_event', (req, res) => {
   events.push(req.body);
