@@ -6,14 +6,44 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const serialize = require('serialize-javascript');
+const moment = require('moment-timezone');
+moment.tz.setDefault('UTC');
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 let events = [];
+let renderer;
+
+if (process.env.NODE_ENV === 'production') {
+  let bundle = fs.readFileSync('./dist/node.bundle.js', 'utf8');
+  renderer = require('vue-server-renderer').createBundleRenderer(bundle);
+  app.use('/dist', express.static(path.join(__dirname, 'dist')));
+}
 
 app.get('/', (req, res) => {
   let template = fs.readFileSync(path.resolve('./index.html'), 'utf-8');
-  res.send(template.replace('<!-- APP -->', `<script>var __EVENTS__ = ${serialize(events)};</script>`));
+  let contentMarker = '<!-- APP -->';
+  if (renderer) {
+    renderer.renderToString({
+      events: events.map(evt=>
+        Object.assign(evt, {
+          date: moment(evt.date)
+        }))
+      }, (err, html) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(
+          template
+          .replace(contentMarker, `
+          <script>var __EVENTS__
+          = ${ serialize(events) }</script>\n${html}
+          `));
+      }
+    });
+  } else {
+    res.send('<p>Awaiting compilation..</p><script src="/reload/reload.js"></script>');
+  }
 });
 
 app.use(require('body-parser').json())
@@ -29,6 +59,13 @@ if (process.env.NODE_ENV === 'development') {
   const reload = require('reload');
   const reloadServer = reload(server, app);
   require('./webpack-dev-middleware').init(app);
+  require('./webpack-server-compiler').init(function(bundle) {
+    let needsReload = (renderer === undefined);
+    renderer = require('vue-server-renderer').createBundleRenderer(bundle);
+    if (needsReload) {
+      reloadServer.reload();
+    }
+  });
 }
 
 server.listen(process.env.PORT, function () {

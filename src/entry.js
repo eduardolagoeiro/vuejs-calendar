@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+import store from './store';
+
 Vue.directive('focus', {
   update: function (el) {
     el.focus()
@@ -9,8 +11,6 @@ Vue.directive('focus', {
 import moment from 'moment-timezone';
 moment.tz.setDefault('UTC');
 
-import store from './store';
-
 import App from './components/App.vue';
 
 Object.defineProperty(Vue.prototype, '$moment', {
@@ -19,7 +19,7 @@ Object.defineProperty(Vue.prototype, '$moment', {
 
 export default function(events){
 
-  const initialState = Object.assign(store.state, { events });
+  let initialState = Object.assign(store.state, { events });
   store.replaceState(initialState);
 
   return new Vue({
@@ -29,6 +29,15 @@ export default function(events){
     components:{
       App
     },
-    store
+    store,
+    render(createElement){
+      return createElement(
+        'div',
+        { attrs: { id: 'app' }},
+        [
+          createElement('app')
+        ]
+      );
+    }
   });
 }
